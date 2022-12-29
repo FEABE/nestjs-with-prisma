@@ -9,6 +9,7 @@ import {
 } from '@nestjs/common';
 import { BoardsService } from './boards.service';
 import { Board } from '@prisma/client';
+import { CreateBoardDto } from 'src/dto/createboard.dto';
 @Controller('boards')
 export class BoardsController {
   constructor(private readonly boardService: BoardsService) {}
@@ -26,14 +27,14 @@ export class BoardsController {
     return this.boardService.getDeleteBoards(id);
   }
   @Post()
-  async CreateBoard(@Body() data: Board): Promise<Board> {
-    return this.boardService.CreateBoards(data);
+  async CreateBoard(@Body() createBoardDto: CreateBoardDto): Promise<Board> {
+    return this.boardService.CreateBoards(createBoardDto);
   }
   @Put(':id')
   async getUpdateBoard(
     @Param('id') id: string,
-    @Body() data: Board,
+    @Body() createBoardDto: CreateBoardDto,
   ): Promise<Board> {
-    return this.boardService.getUpdateBoards(id, data);
+    return this.boardService.getUpdateBoards(id, createBoardDto);
   }
 }
