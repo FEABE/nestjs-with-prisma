@@ -1,10 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
 import { Board } from '@prisma/client';
 import { CreateBoardDto } from 'src/dto/createboard.dto';
 
 @Injectable()
 export class BoardsService {
+  private logger = new Logger(BoardsService.name);
   constructor(private prismaService: PrismaService) {}
 
   async getAllBoards(): Promise<Board[]> {

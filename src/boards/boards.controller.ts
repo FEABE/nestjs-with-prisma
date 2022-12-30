@@ -6,6 +6,7 @@ import {
   Param,
   Post,
   Put,
+  Logger,
 } from '@nestjs/common';
 import { BoardsService } from './boards.service';
 import { Board } from '@prisma/client';
@@ -13,6 +14,7 @@ import { CreateBoardDto } from 'src/dto/createboard.dto';
 @Controller('boards')
 export class BoardsController {
   constructor(private readonly boardService: BoardsService) {}
+  private logger = new Logger(BoardsController.name);
 
   @Get()
   async getAllBoard(): Promise<Board[]> {
@@ -20,7 +22,8 @@ export class BoardsController {
   }
   @Get(':id')
   async getOneBoard(@Param('id') id: string): Promise<Board | null> {
-    return this.boardService.getOneBoards(id);
+    const reuse = this.boardService.getOneBoards(id);
+    return reuse;
   }
   @Delete(':id')
   async getDeleteBoard(@Param('id') id: string): Promise<Board | null> {
