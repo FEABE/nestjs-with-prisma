@@ -7,6 +7,7 @@ import {
   Post,
   Put,
   Logger,
+  NotFoundException,
 } from '@nestjs/common';
 import { BoardsService } from './boards.service';
 import { Board } from '@prisma/client';
@@ -23,6 +24,9 @@ export class BoardsController {
   @Get(':id')
   async getOneBoard(@Param('id') id: string): Promise<Board | null> {
     const reuse = this.boardService.getOneBoards(id);
+    if (!reuse) {
+      throw new NotFoundException(`The Board ${id}is not found`);
+    }
     return reuse;
   }
   @Delete(':id')
