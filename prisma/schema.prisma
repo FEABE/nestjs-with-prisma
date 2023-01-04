@@ -10,13 +10,22 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+
+model User{
+  id              Int              @id @default(autoincrement())
+  username        String              @db.VarChar(200)
+  password        String              @db.VarChar(200)
+  boards Board[]
+}
+
+
 model Board {
-  id               String             @id @default(uuid())
+  id               Int             @id @default(autoincrement())
   title            String             @db.VarChar(200)
   description      String?            @db.VarChar(200)
   status           BoardStatus        @default(PUBLIC)
-  maker User @relation(fields:[makerid],references: [id])
-  makerid String
+  maker            User               @relation(fields:[makerId],references: [id])
+  makerId          Int
 }
 
 enum BoardStatus {
@@ -24,9 +33,3 @@ enum BoardStatus {
   PRIVATE
 }
 
-model User{
-  id String @id @default(uuid())@unique
-  username String @db.VarChar(200)
-  password String @db.VarChar(200)
-  boards Board[]
-}

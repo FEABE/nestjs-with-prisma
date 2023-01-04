@@ -1,8 +1,9 @@
-import { Body, Controller, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Post, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateUserDto } from 'src/dto/createUser.dto';
 import { User } from '@prisma/client';
 import { AuthGuard } from '@nestjs/passport';
+import { GetUser } from 'src/common/decorator/get-user.decorator';
 
 @Controller('auth')
 export class AuthController {
@@ -19,7 +20,7 @@ export class AuthController {
   }
   @Post('/test')
   @UseGuards(AuthGuard())
-  test(@Req() req) {
-    console.log('request:', req);
+  test(@GetUser() user: User) {
+    console.log('request:', user);
   }
 }

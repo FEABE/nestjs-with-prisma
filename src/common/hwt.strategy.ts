@@ -13,10 +13,13 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
   async validate(payload) {
-    const { id, username, password } = payload;
-    console.log(payload);
+    const { username } = payload;
+    console.log(username);
     const user: User = await this.prisemaService.user.findUnique({
-      where: { id: id },
+      where: {
+        id: '258f4f74-12d2-4312-9b00-bc932c98a6a8',
+        username,
+      },
     });
     if (!user) {
       throw new UnauthorizedException();
