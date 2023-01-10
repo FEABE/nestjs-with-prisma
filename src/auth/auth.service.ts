@@ -42,7 +42,7 @@ export class AuthService {
   async SignIn(createUserDto: CreateUserDto): Promise<{ accessToken: string }> {
     const { id, password, username } = createUserDto;
     const user = await this.prismaService.user.findUnique({
-      where: { id },
+      where: { id: +id },
     });
     if (user && (await bcrypt.compare(password, user.password))) {
       const payload = { username };

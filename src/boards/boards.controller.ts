@@ -39,10 +39,20 @@ export class BoardsController {
   }
   @Post()
   async CreateBoard(
-    @Body() createBoardDto: CreateBoardDto,
+    @Body()
+    createBoardDto: CreateBoardDto,
     @GetUser() user: User,
   ): Promise<Board> {
-    return this.boardService.CreateBoards(createBoardDto, user);
+    const { description, title, status, makerId } = createBoardDto;
+    return this.boardService.CreateBoards(
+      {
+        description,
+        title,
+        status,
+        makerId,
+      },
+      user,
+    );
   }
   @Put(':id')
   async getUpdateBoard(
